@@ -7,7 +7,7 @@ RSpec.feature "User creates a playlist" do
     playlist_name = "My Jams"
 
     visit playlists_path
-    click_on "New Playlist"
+    click_on "New playlist"
     fill_in "playlist_name", with: playlist_name
     check("song-#{song_one.id}")
     check("song-#{song_three.id}")

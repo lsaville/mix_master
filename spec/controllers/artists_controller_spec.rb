@@ -20,4 +20,44 @@ RSpec.describe ArtistsController, type: :controller do
       expect(response).to render_template("show")
     end
   end
+
+  describe "GET #new" do
+    it "assigns blank artist to @artist and renders new template" do
+      get(:new)
+      expect(assigns(:artist)).to be_a_new(Artist)
+      expect(response).to render_template("new")
+    end
+  end
+
+  describe "GET #edit" do
+    it "assigns the requested artist to @artist and renders edit template" do
+      artist = create(:artist)
+
+      get(:edit, {:id => artist.to_param})
+
+      expect(assigns(:artist)).to eq(artist)
+      expect(response).to render_template("edit")
+    end
+  end
+
+  describe "POST #create" do
+    context "with valid params" do
+      it "creates a new artist" do
+        expect {
+          post :create, {:artist => attributes_for(:artist)}
+        }.to change(Artist, :count).by(1)
+      end
+
+      it "assigns new artist to @artist" do
+        post :create, {:artist => attributes_for(:artist)}
+        expect(assigns(:artist)).to be_a(Artist)
+        expect(assigns(:artist)).to be_persisted
+      end
+
+      it "redirects to the created artist" do
+        post :create, {:artist => attributes_for(:artist)}
+        expect(response).to redirect_to(Artist.last)
+      end
+    end
+  end
 end
